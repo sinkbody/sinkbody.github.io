@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+		<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+	</head>
+
+	<body>
+		<script src="//unpkg.com/vue/dist/vue.js"></script>
+		<script src="//unpkg.com/element-ui/lib/index.js"></script>
+		<div id="app">
+			<el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+				<el-menu-item v-for="(item, index) in tableData" v-bind:index="index+1">{{item.name}}{{ index+1 }}</el-menu-item>
+			</el-menu>
+			<!--<example>{{b}}</example>-->
+		</div>
+
+	</body>
+	<script>
+		var Main = {
+			data() {
+				return {
+					activeIndex: '1',
+					activeIndex2: '1',
+					tableData: [
+						{name: '王小虎'}, 
+						{name: '王小虎'}, 
+						{name: '王小虎'}, 
+						{name: '王小虎'}
+					]
+				};
+			},
+			methods: {
+				handleSelect(key, keyPath) {
+					console.log(key, keyPath);
+				}
+			}
+		}
+		var Ctor = Vue.extend(Main)
+		new Ctor().$mount('#app')
+	</script>
+
+</html>

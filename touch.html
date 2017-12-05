@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+
+	</head>
+
+	<body style="height: 12000px;">
+		<div class="clickBox">1</div>
+		<div class="clickBox">2</div>
+		<div class="clickBox">3</div>
+		<div class="clickBox">4</div>
+		<div class="clickBox">5</div>
+		<div class="clickBox">6</div>
+		<div class="Box">1111111111111111111</div>
+		<div class="Box">2222222222222222222</div>
+		<div class="Box">3333333333333333333</div>
+		<div class="Box">4444444444444444444</div>
+		<div class="Box">5555555555555555555</div>
+		<div class="Box">6666666666666666666</div>
+		<div id="container" style="width: 500px;height: 500px;overflow: scroll;">id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="contai
+			id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"id="container"ner"</div>
+		<div id="inp" ></div>
+		<script>
+			var clickBox = document.querySelectorAll('.clickBox');
+			var Box = document.querySelectorAll('.Box');
+			var boxs = document.getElementsByClassName('Box');
+				for (let i = 0; i < clickBox.length; i++){
+			    clickBox[i].onclick = function(){
+			    	Box[i].style.marginLeft="100px"
+			        console.log(i)
+			    }
+			}
+			for (let i = 0; i < Box.length; i++){
+			    Box[i].onclick = function(){
+			    	clickBox[i].style.marginLeft="100px"
+			        console.log(i)
+			    }
+			}
+			
+			var aX,aY,bX,bY;
+			function load (){  
+			   
+			    document.addEventListener('touchstart',touch, false);  
+			    document.addEventListener('touchmove',touch, false);  
+			    document.addEventListener('touchend',touch, false);  
+			       
+			    function touch (event){  
+			        var event = event || window.event;  
+			           
+			        var oInp = document.getElementById("inp");  
+			   
+			        switch(event.type){  
+			            case "touchstart":  
+			            	aX = event.touches[0].clientX;
+			            	aY = event.touches[0].clientY;
+			                oInp.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";  
+			                console.log('aX='+aX+';'+'aY='+aY);
+			                break;  
+			            case "touchend":  
+			            	bX = event.changedTouches[0].clientX;
+			            	bY = event.changedTouches[0].clientY;
+			                oInp.innerHTML = "Touch end (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")";  
+			                console.log('bX='+bX+';'+'bY='+bY);
+			                tou()
+			                break;  
+			            case "touchmove":  
+			                event.preventDefault();  
+			                oInp.innerHTML = "Touch moved (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";  
+			                break;  
+			        }  
+			        
+			        
+			    }  
+			}  
+			function tou(){
+				if(aX-bX<200&&aY-bY>200){
+					Box[0].style.display='none';
+//			        console.log('---');
+			    }else if(bY-aY>200){
+			    	Box[0].style.display='block';
+			    	console.log('---');
+			    }
+			}
+			window.addEventListener('load',load, false); 
+			
+			
+//			const arr = [10, 12, 15, 21];
+//			for (let i = 0; i < arr.length; i++) {
+//			  // 使用ES6的let语法，它会创建一个新的绑定
+//			  // 每个方法都是被单独调用的
+//			  // 更多详细信息请阅读: http://exploringjs.com/es6/ch_variables.html#sec_let-const-loop-heads
+//			  setTimeout(function() {
+//			    console.log('The index of this number is: ' + i);
+//			  }, 1000);
+//			}
+			
+			// 当用户滚动时函数会被调用
+			function foo() {
+			  console.log('You are scrolling!');
+			}
+			 
+			// 在事件触发的两秒后，我们包裹在debounce中的函数才会被触发
+			let elem = document.getElementById('container');
+			elem.addEventListener('scroll', debounce(foo, 2000));
+			// debounce函数用来包裹我们的事件
+			function debounce(fn, delay) {
+			  // 持久化一个定时器 timer
+			  let timer = null;
+			  // 闭包函数可以访问 timer
+			  return function() {
+			    // 通过 'this' 和 'arguments'
+			    // 获得函数的作用域和参数
+			    let context = this;
+			    let args = arguments;
+			    // 如果事件被触发，清除 timer 并重新开始计时
+			    clearTimeout(timer);
+			    timer = setTimeout(function() {
+			      fn.apply(context, args);
+			    }, delay);
+			  }
+			}
+		</script>
+	</body>
+
+</html>

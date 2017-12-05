@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<!--<script src="Resources/js/ext_4.2/bootstrap.js" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script src="Resources/js/ext_4.2/locale/ext-lang-zh_CN.js" type="text/javascript" charset="utf-8"></script>-->
+		<!--<link rel="stylesheet" type="text/css" href="Resources/js/ext_4.2/resources/ext-theme-neptune/ext-theme-neptune-all.css" />-->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js" ></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</head>
+
+	<body style="margin: 50px;">
+		<div id="app">
+		<blockquote>
+			<div class="bs-callout bs-callout-info">{{messagea}}</div>
+			<footer class="blockquote-reverse">实例一</footer>
+		</blockquote>
+		<blockquote>
+			<div class="bs-callout bs-callout-info">
+				<span v-bind:title='messageb'>悬停查看信息</span>
+			</div>
+			<footer class="blockquote-reverse">实例二</footer>
+		</blockquote>
+		<blockquote>
+			<div class="bs-callout bs-callout-info">
+				<span v-if="seen">现在你看到我了</span>
+			</div>
+			<footer class="blockquote-reverse">实例三</footer>
+		</blockquote>
+		<blockquote>
+			<div class="bs-callout bs-callout-info">
+				<ol>
+					<li v-for="todo in todos">{{todo.text}}</li>
+				</ol>
+			</div>
+			<footer class="blockquote-reverse">实例四</footer>
+		</blockquote>
+		<blockquote>
+			<div>
+			  <ol>
+			    <todo-item v-for="item in groceryList" v-bind:to="item"></todo-item>
+			  </ol>
+			</div>
+			<footer class="blockquote-reverse">实例五</footer>
+		</blockquote>
+		<blockquote>
+			<div class="bs-callout bs-callout-info">{{mes}} --mes</div>
+			<div class="bs-callout bs-callout-info">{{reverseMessage()}}我是相反的，--使用方法--</div>
+			<div class="bs-callout bs-callout-info">{{reverseMes}}我是相反的，--使用计算--</div>
+			<footer class="blockquote-reverse">实例六</footer>
+		</blockquote>
+		<blockquote>
+			<div class="bs-callout bs-callout-info">firstName:{{mess.firstName}}</div>
+			<div class="bs-callout bs-callout-info">lastName:{{mess.lastName}}</div>
+			<div class="bs-callout bs-callout-info">fullName:{{fullName}}</div>
+			<footer class="blockquote-reverse">实例七</footer>
+		</blockquote>
+		</div>
+	</body>
+	<script>
+		//-------------------示例一-------------------------//
+		Vue.component('todo-item',{
+			props:['to'],
+			template:"<li>{{to.text}}</li>",
+		})
+		var app = new Vue({
+			el:'#app',//选择器
+			data: {//数据
+				messagea: 'Hello Vue!',
+				messageb: '您已加载此页面' + new Date(),
+				seen: true,
+				todos: [{
+					text: 'Learn JavaScript'
+				}, {
+					text: 'Learn Vue'
+				}, {
+					text: 'Build something awesome'
+				}],
+				groceryList: [
+			      { text: 'Vegetables',name:'111' },
+			      { text: 'Cheese' ,name:'222'},
+			      { text: 'Whatever else humans are supposed to eat' ,name:'333'}
+			    ],
+			    mes:'Hello Vue!',
+			    mess:{
+			    	firstName: 'Foo',
+				    lastName: 'Bar',
+				    fullName: 'Foo Bar'
+			    },
+			},
+			methods:{//方法
+				reverseMessage:function(){
+					console.log("reverseMessage:"+this.mes.split('').reverse().join())
+					return this.mes.split('').reverse().join();
+				}
+			},
+			computed:{
+				reverseMes:function(){
+					console.log("reverseMes:"+this.mes.split('').reverse().join())
+					return this.mes.split('').reverse().join();
+				},
+				fullName: function () {
+					console.log("fullName:"+this.mess.firstName + ' ' + this.mess.lastName)
+			      return this.mess.firstName + ' ' + this.mess.lastName
+			    }
+			}
+		})
+		
+		
+		
+
+		
+
+		
+	</script>
+
+</html>

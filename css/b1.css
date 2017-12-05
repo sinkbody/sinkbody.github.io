@@ -1,0 +1,7 @@
+*{ margin: 0 ; padding: 0;}
+.nav{ font-size: 14px; font: "微软雅黑"; color: black;
+	
+}
+.nav ul li{
+	list-style: none;
+}

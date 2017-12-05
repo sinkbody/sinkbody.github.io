@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js" ></script>
+	</head>
+	<body>
+		<button id="bt" value="dianwo">点我</button>
+	</body>
+	<script>
+		var f = true;
+		var a = 1;
+		$('#bt').on('click',function(){
+			if(f){
+				console.log(a);
+				alert(a);
+				f=false;
+			}else{
+				var b = a+1;
+				console.log(b);
+				alert(b);
+				f=true;
+			}
+		})
+	</script>
+</html>

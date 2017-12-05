@@ -1,0 +1,14 @@
+.san{
+	padding: 5px 25px;
+	border: 1px solid #44a5fc;
+	color: #333;
+	transform: skew(-20deg);
+	display: inline-block;
+}
+.san div{
+	transform: skew(20deg);
+}
+.san:hover{
+	background: #44a5fc;
+	color: #fff;
+}

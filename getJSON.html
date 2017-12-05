@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>JQ获取.JSON文件内容</title>
+		<link rel="stylesheet" type="text/css" href="css/b1.css" />
+		<script src="https://code.jquery.com/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		#divframe {
+			border: 1px solid #999;
+			width: 500px;
+			margin: 0 auto;
+		}
+		
+		.loadTitle {
+			background: #CCC;
+			height: 30px;
+		}
+	</style>
+
+	<body>
+		名字：<input id="aa" type="text" /><br />
+		年龄：<input id="bb" type="text" /><br />
+		性别：<input id="cc" type="text" /><br />
+		介绍：<input id="dd" type="text" /><br />
+		<button onclick="B()">提交</button>
+		<div class="div" style="text-align: center;"></div>
+		
+		<div id="divframe"> 
+			<div class="loadTitle"> 
+				<input type="button" value="获取数据" id="btn"/> 
+			</div> 
+			<div id="jsonTip"> 
+			</div> 
+		</div>
+	</body>
+
+	<script type="text/javascript">
+				function B(){
+					var mz = document.getElementById('aa');
+					var nl = document.getElementById('bb');
+					var xb = document.getElementById('cc');
+					var js = document.getElementById('dd');
+					if(mz.value!= "" && nl.value!= "" && xb.value!= "" && js.value!= ""){
+						var cat1 = new Cat(mz.value,nl.value,xb.value,js.value);
+						cat1.cont();
+					}else{
+						alert("不能为空");
+					}
+				}
+				function Cat(mz,nl,xb,js){
+					this.mz=mz;
+					this.nl=nl;
+					this.xb=xb;
+					this.js=js;
+					var texta = "<p>你的名字："+mz+"</p><br /><p>你的年龄："+nl+"</p><br /><p>你的性别："+xb+"</p><br /><p>你的介绍："+js+"</p><br />";
+					this.cont=function(){$('.div').html(texta)};
+				}
+		//		var a = "5";
+		//		alert(a);
+		
+		$(function() {
+			$("#btn").click(function() {
+				$.getJSON("js/userinfo.json",function(data) {
+					var $jsontip = $("#jsonTip");
+					var strHtml = ""; //存储数据的变量 
+					$jsontip.empty(); //清空内容 
+//					alert(data.Members.length);
+					for(i=0;i<data.Members.length;i++){
+						strHtml += "Conference：" + data.Conference+ "<br>";
+						strHtml += "Date：" + data.Date+ "<br>";
+						strHtml += "Address：" + data.Address+ "<br>";
+						strHtml += "Address.Name：" + data.Members[i].Name+ "<br>";
+						strHtml += "Address.Age：" + data.Members[i].Age+ "<br>";
+						strHtml += "Address.Company：" + data.Members[i].Company+ "<br>";
+						strHtml += "Address.Engineer：" + data.Members[i].Engineer+ "<br>";
+						strHtml += "<hr>"
+						$jsontip.html(strHtml); //显示处理后的数据 
+					}
+				})
+			})
+		})
+	</script>
+
+</html>

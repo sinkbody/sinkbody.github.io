@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</head>
+
+	<body style="width: 95%;margin: 5px auto 0;">
+		<div id="watch-example">
+			<p>
+				<blockquote>{{ answer }}</blockquote>
+				<input class="form-control" v-model="question"><br />
+				<!--<blockquote class='blockquote-reverse'>你可以问你想知道的问题:</blockquote>-->
+			</p>
+			<blockquote class='blockquote-reverse'>{{msg.info}}</blockquote>
+			<blockquote>{{msg.text}}</blockquote>
+		</div>
+	</body>
+	<script>
+//		Vue.component('todo-item',{
+//			props:['to'],
+//			template:"<ul class='list-unstyled'><li class='blockquote-reverse'>{{to.info}}</li><li>{{to.text}}</li></ul>",
+//		})
+		var watchExampleVM = new Vue({
+			el: '#watch-example',
+			data: {
+				question: '',
+				answer: '我不能给你一个答案，直到你提出一个问题！',
+				code:'',
+				msg:[
+					{info:'问',text:'答'}
+				],
+				text:'',
+//				seen:true,
+			},
+			watch: {
+				// 如果 question 发生改变，这个函数就会运行
+				question: function(newQuestion) {
+					this.answer = '等待您停止输入...'
+					this.getAnswer()
+				}
+			},
+			methods: {
+				// _.debounce 是一个通过 lodash 限制操作频率的函数。
+				// 在这个例子中，我们希望限制访问yesno.wtf/api的频率
+				// ajax请求直到用户输入完毕才会发出
+				// 学习更多关于 _.debounce function (and its cousin
+				// _.throttle), 参考: https://lodash.com/docs#debounce
+				getAnswer: _.debounce(
+					function() {
+						var vm = this
+//						vm.seen = true;
+						if(this.question.indexOf('。') === -1) {
+							vm.answer = '问题通常包含一个句号。 ;-)'
+							return
+						}
+						vm.answer = '思考中...'
+						$.post("http://www.tuling123.com/openapi/api", {
+							'key': '8607eacb2a094c0d836ce9633d41ec9c',
+							'info':vm.question
+						}, function(data) {
+//							vm.seen = false;
+							vm.code = data.code;
+							if(vm.code){
+								vm.msg.text=data.text;
+								vm.msg.info=vm.question;
+								vm.question='';
+							}else{
+								vm.answer = '错误！无法连接到API. ' + data.text
+							}
+						})
+					},
+					// 这是我们为用户停止输入等待的毫秒数
+					500
+				)
+			}
+		})
+	</script>
+
+</html>
